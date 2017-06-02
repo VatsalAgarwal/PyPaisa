@@ -1,3 +1,7 @@
+# I'm sorry, but until I figure this out, you'll have to have a MySQL Test databse 
+# up and running for the script to work. I've added some defaults, but feel free to 
+# substitute your own. I profusely apologise for the inconvenience.
+
 import sys
 from PyQt5 import QtCore, QtGui, uic
 from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication
@@ -27,6 +31,20 @@ class MyApp(QMainWindow, Ui_MainWindow):
 
         # Self explanatory, but still: The above function computes the 
         # total bill amount from the product of cost and quantity per item.
+        
+     def SaveSQL(self):
+        db = MySQLdb.connect('localhost','name','password','PyPaisaDB')
+        cursor = db.cursor()
+        cursor.execute("CREATE TABLE IF NOT EXISTS 'PYPAISADB'.'PYPAISA'('Cost' float(4,5) not null, 'Name' varchar(20) not null, 'Quantity' int not null, Price long not null;")
+        sql= """INSERT INTO PYPAISA(COST, NAME, QUANTITY, PRICE) VALUES({},{},{},{})""".format(Cost, Name, Quantity, Price)
+
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except:
+            db.rollback()
+            db.close()
+
         
         
 if __name__ == "__main__":
