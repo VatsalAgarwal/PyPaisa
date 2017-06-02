@@ -43,7 +43,8 @@ class MyApp(QMainWindow, Ui_MainWindow):
             db.commit()
         except:
             db.rollback()
-            db.close()
+        
+        db.close()
 
         
         
